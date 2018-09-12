@@ -175,6 +175,18 @@ module Middleman
             end
           end
 
+          # Check for mandatory fields in all the blog posts that are published
+          unless options.mandatory_fields.empty? then
+            @_articles.each do |article|
+              options.mandatory_fields.each do |field|
+                if article.data.send(field.to_sym).nil? then
+                  @app.logger.error "== ERROR: blog article '#{article.normalized_path}' is missing mandatory field '#{field}'!"
+                  raise "Article '#{article.normalized_path}' is missing mandatory field '#{field}'!"
+                end
+              end
+            end
+          end
+
           used_resources << resource
         end
 

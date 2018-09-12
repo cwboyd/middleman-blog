@@ -41,6 +41,7 @@ module Middleman
     option :preserve_locale, false, 'Use the global Middleman I18n.locale instead of the lang in the article\'s frontmatter'
     option :new_article_template, File.expand_path('../commands/article.tt', __FILE__), 'Path (relative to project root) to an ERb template that will be used to generate new articles from the "middleman article" command.'
     option :default_extension, '.markdown', 'Default template extension for articles (used by "middleman article")'
+    option :mandatory_fields, Array.new, 'Front matter fields which must be present in each blog post'
 
     # @return [BlogData] blog data for this blog, which has all information about the blog articles
     attr_reader :data
@@ -155,6 +156,7 @@ module Middleman
       end
 
       logger.info "== Blog Sources: #{options.sources} (:prefix + :sources)"
+      logger.info "== Blog checking for mandatory fields: [#{options.mandatory_fields.join(', ')}]"
     end
 
     private
